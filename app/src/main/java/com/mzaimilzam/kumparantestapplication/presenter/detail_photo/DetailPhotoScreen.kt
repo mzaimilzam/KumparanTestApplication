@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
+import com.mzaimilzam.core.domain.model.ResultAlbumList
 import com.mzaimilzam.kumparantestapplication.presenter.components.ArrowBack
 import com.mzaimilzam.kumparantestapplication.presenter.components.ZoomableImage
 
@@ -23,42 +24,32 @@ import com.mzaimilzam.kumparantestapplication.presenter.components.ZoomableImage
 @Composable
 fun DetailPhotoScreen(
     navController: NavController,
-    url: String,
-    title: String
+    result: ResultAlbumList
 ) {
     val painter =
-        rememberImagePainter("")
+        rememberImagePainter(result.url)
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxWidth()) {
             ArrowBack(navController = navController)
+            Text(
+                text = result.title.toString()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
+                textAlign = TextAlign.Start,
+                style = MaterialTheme.typography.h6,
+                color = Color.Black,
+                modifier = Modifier
+                    .padding(all = 16.dp)
+                    .fillMaxHeight(0.3f)
+            )
+
             ZoomableImage(
                 painter = painter,
                 isRotation = false,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .size(250.dp)
+                    .size(300.dp)
             )
-            Text(
-                text = "title",
-                textAlign = TextAlign.Start,
-                style = MaterialTheme.typography.h6,
-                color = Color.White,
-                modifier = Modifier
-                    .padding(all = 16.dp)
-                    .fillMaxHeight(0.3f)
-            )
-//                Text(
-//                    text = title,
-//                    style = MaterialTheme.typography.subtitle2,
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .fillMaxHeight(0.3f)
-//                        .padding(start = 4.dp),
-//                    maxLines = 1,
-//                    overflow = TextOverflow.Ellipsis,
-//                    fontSize = 11.sp,
-//                )
         }
     }
 

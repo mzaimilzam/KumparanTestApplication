@@ -11,6 +11,7 @@ import com.mzaimilzam.kumparantestapplication.DETAIL_USER_SCREEN_USERID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -30,15 +31,22 @@ class DetailUserViewModel @Inject constructor(
     private val _stateAlbums = mutableStateOf(DetailAlbumsState())
     val stateAlbums: State<DetailAlbumsState> = _stateAlbums
 
-    private val _statePhoto = mutableStateOf(DetailPhotoState())
-    val statePhoto: State<DetailPhotoState> = _statePhoto
+    private val _stateResult = mutableStateOf(DetailResultState())
+    val stateResult: State<DetailResultState> = _stateResult
 
     init {
+        viewModelScope.launch {
+            deletePhoto()
+        }
         savedStateHandle.get<String>(DETAIL_USER_SCREEN_USERID)?.let { userId ->
             getUserById(userId = userId)
             getAlbums(userId = userId)
         }
 
+    }
+
+    suspend fun deletePhoto() {
+        usecase.deletePhoto()
     }
 
     fun getUserById(userId: String) {
@@ -77,14 +85,13 @@ class DetailUserViewModel @Inject constructor(
         usecase.getPhotobyAlbumId(albumId).onEach { result ->
             when (result) {
                 is Resource.Loading -> {
-                    _statePhoto.value = DetailPhotoState(isLoading = true)
+                    _stateResult.value = DetailResultState(isLoading = true)
                 }
                 is Resource.Success -> {
-                    _statePhoto.value =
-                        DetailPhotoState(isLoading = false, result = result.data ?: emptyList())
+                    resultAlbumList()
                 }
                 is Resource.Error -> {
-                    _statePhoto.value = DetailPhotoState(
+                    _stateResult.value = DetailResultState(
                         isLoading = false,
                         error = result.message ?: "An Expected error occured.",
                     )
@@ -93,4 +100,11 @@ class DetailUserViewModel @Inject constructor(
 
         }.launchIn(viewModelScope)
     }
+
+    private fun resultAlbumList() {
+        usecase.getResultAlbumList().onEach { result ->
+            _stateResult.value = DetailResultState(isLoading = false, result = result)
+        }.launchIn(viewModelScope)
+    }
+
 }

@@ -119,6 +119,6 @@ interface AllPostDao {
         insertPhoto(data)
     }
 
-    @Query("SELECT * FROM photo_entity WHERE id LIKE '%'|| :albumId || '%' ")
-    fun getPhotoByAlbumId(albumId : Int): Flow<List<PhotoEntity>>
+    @Query("SELECT photo_entity.id AS id,  photo_entity.title AS title, photo_entity.url AS url,photo_entity.thumbnailUrl AS thumbnailUrl, photo_entity.albumId AS albumId , albums_entity.title AS albumName FROM photo_entity LEFT JOIN albums_entity ON photo_entity.albumId = albums_entity.id")
+    fun getResultAlbumList(): Flow<List<ResultAlbumListEntity>>
 }

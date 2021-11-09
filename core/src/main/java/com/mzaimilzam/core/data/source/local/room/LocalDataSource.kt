@@ -71,7 +71,7 @@ class LocalDataSource @Inject constructor(
 
     suspend fun deletePhoto() = allPostDao.deletePhoto()
 
-    fun getFilterPhoto(albumId: Int): Flow<List<PhotoEntity>> =
-        allPostDao.getPhotoByAlbumId(albumId)
 
+    // result AlbumLIst
+    fun getResultALbumList() = allPostDao.getResultAlbumList()
 }

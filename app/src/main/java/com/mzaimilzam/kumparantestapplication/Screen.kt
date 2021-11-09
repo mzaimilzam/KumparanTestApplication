@@ -16,6 +16,8 @@ const val DETAIL_USER_SCREEN_USERID = "userId"
 const val DETAIL_PHOTO_SCREEN_URL = "url"
 const val DETAIL_PHOTO_SCREEN_TITLE = "titlePhoto"
 
+const val DETAIL_PHOTO_SCREEN_PHOTO = "photo"
+
 sealed class Screen(val route: String) {
     object AllPostScreen : Screen("all_post_screen")
     object DetailPostScreen :
@@ -39,14 +41,15 @@ sealed class Screen(val route: String) {
         return "detail_user_screen/$userId"
     }
 
-    object DetailPhotoScreen :
-        Screen("detail_photo_screen/{$DETAIL_PHOTO_SCREEN_URL}/{$DETAIL_PHOTO_SCREEN_TITLE}")
-
-    fun passtoDetailPhotoScreen(
-        url: String,
-        title: String
-    ): String {
-        return "detail_photo_screen/$url/$title"
-    }
+    object DetailPhotoScreen : Screen("detail_photo_screen")
+//    object DetailPhotoScreen :
+//        Screen("detail_photo_screen/{$DETAIL_PHOTO_SCREEN_URL}/{$DETAIL_PHOTO_SCREEN_TITLE}")
+//
+//    fun passtoDetailPhotoScreen(
+//        url: String,
+//        title: String
+//    ): String {
+//        return "detail_photo_screen/$url/$title"
+//    }
 
 }

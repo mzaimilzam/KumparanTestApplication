@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
-import com.mzaimilzam.core.domain.model.Photo
+import com.mzaimilzam.core.domain.model.ResultAlbumList
+import com.mzaimilzam.kumparantestapplication.DETAIL_PHOTO_SCREEN_PHOTO
+import com.mzaimilzam.kumparantestapplication.Screen
 
 /**
  * Created by Muhammad Zaim Milzam on 08/11/2021.
@@ -26,22 +28,21 @@ import com.mzaimilzam.core.domain.model.Photo
 @Composable
 fun ItemListPhoto(
     navController: NavController,
-    photo: Photo,
-    onItemClick: (Photo) -> Unit
+    result: ResultAlbumList,
 ) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .clickable { onItemClick(photo) }
+        .clickable { gotoPhotoDetail(result, navController) }
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Image(
                 painter = rememberImagePainter(
-                    data = photo.thumbnailUrl,
+                    data = result.thumbnailUrl,
                     builder = {
                         crossfade(true)
                     }
                 ),
-                contentDescription = photo.id.toString(),
+                contentDescription = result.id.toString(),
                 modifier = Modifier
                     .size(120.dp)
                     .clip(
@@ -52,15 +53,22 @@ fun ItemListPhoto(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = photo.title.toString(),
+                text = result.title.toString()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                 style = MaterialTheme.typography.subtitle2,
                 modifier = Modifier
                     .width(120.dp)
-                    .padding(start = 4.dp),
+                    .padding(start = 4.dp)
+                    .fillMaxWidth(),
                 maxLines = 3,
                 overflow = TextOverflow.Ellipsis,
                 fontSize = 12.sp,
             )
         }
     }
+}
+
+fun gotoPhotoDetail(result: ResultAlbumList, navController: NavController) {
+    navController.currentBackStackEntry?.arguments?.putParcelable(DETAIL_PHOTO_SCREEN_PHOTO, result)
+    navController.navigate(Screen.DetailPhotoScreen.route)
 }

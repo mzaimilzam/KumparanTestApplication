@@ -45,13 +45,22 @@ fun DetailPostTopSection(
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "Username : ${allPost.username.toString()}",
-                style = MaterialTheme.typography.caption,
-                modifier = Modifier
-                    .padding(end = 16.dp)
-                    .clickable { onItemClick(allPost) }
-            )
+            Row(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    text = "Username :",
+                    style = MaterialTheme.typography.caption,
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text(
+                    text = allPost.username.toString(),
+                    style = MaterialTheme.typography.caption,
+                    color = MaterialTheme.colors.primary,
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .clickable { onItemClick(allPost) }
+                )
+
+            }
             Spacer(modifier = Modifier.height(8.dp))
             Divider()
         }

@@ -163,9 +163,9 @@ class Repository @Inject constructor(
         return localDataSource.deletePhoto()
     }
 
-    override fun getFilterFoto(albumId: Int): Flow<List<Photo>> {
-        return localDataSource.getFilterPhoto(albumId)
-            .map { DataMapperPhoto.mapEntitiestoDomain(it) }
+    override fun getResultAlbumList(): Flow<List<ResultAlbumList>> {
+        return localDataSource.getResultALbumList()
+            .map { DataMapperAlbums.mapResultEntitiestoDomain(it) }
     }
 
 

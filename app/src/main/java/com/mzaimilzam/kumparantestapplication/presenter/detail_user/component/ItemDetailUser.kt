@@ -3,6 +3,7 @@ package com.mzaimilzam.kumparantestapplication.presenter.detail_user.component
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,19 +22,23 @@ fun ItemDetailUser(
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = "Name : ${user.name.toString()}",
-            modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp)
+            style = MaterialTheme.typography.h6,
+            modifier = Modifier.padding(vertical = 2.dp, horizontal = 16.dp)
         )
         Text(
             text = "Email : ${user.email.toString()}",
-            modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp)
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.padding(vertical = 2.dp, horizontal = 16.dp)
         )
         Text(
             text = "Address : ${user.address.toString()}",
-            modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp)
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.padding(vertical = 2.dp, horizontal = 16.dp)
         )
         Text(
             text = "Company : ${user.companyName.toString()}",
-            modifier = Modifier.padding(vertical = 4.dp, horizontal = 16.dp)
+            style = MaterialTheme.typography.caption,
+            modifier = Modifier.padding(vertical = 2.dp, horizontal = 16.dp)
         )
     }
 }

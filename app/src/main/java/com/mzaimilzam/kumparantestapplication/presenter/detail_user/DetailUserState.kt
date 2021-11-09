@@ -1,7 +1,7 @@
 package com.mzaimilzam.kumparantestapplication.presenter.detail_user
 
 import com.mzaimilzam.core.domain.model.Albums
-import com.mzaimilzam.core.domain.model.Photo
+import com.mzaimilzam.core.domain.model.ResultAlbumList
 import com.mzaimilzam.core.domain.model.Users
 
 /**
@@ -20,8 +20,8 @@ data class DetailAlbumsState(
     val error: String = ""
 )
 
-data class DetailPhotoState(
+data class DetailResultState(
     val isLoading: Boolean = false,
-    val result: List<Photo> = emptyList(),
+    val result: List<ResultAlbumList> = emptyList(),
     val error: String = ""
 )

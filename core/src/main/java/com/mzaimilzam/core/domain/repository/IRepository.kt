@@ -23,6 +23,6 @@ interface IRepository {
     fun getPhotobyAlbumId(albumId: Int): Flow<Resource<List<Photo>>>
     suspend fun deletePhoto()
 
-    fun getFilterFoto(albumId: Int) : Flow<List<Photo>>
+    fun getResultAlbumList(): Flow<List<ResultAlbumList>>
 
 }

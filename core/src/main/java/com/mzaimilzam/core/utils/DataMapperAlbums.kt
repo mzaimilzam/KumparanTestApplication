@@ -1,8 +1,10 @@
 package com.mzaimilzam.core.utils
 
 import com.mzaimilzam.core.data.source.local.entity.AlbumsEntity
+import com.mzaimilzam.core.data.source.local.entity.ResultAlbumListEntity
 import com.mzaimilzam.core.data.source.remote.response.album.AlbumsResponse
 import com.mzaimilzam.core.domain.model.Albums
+import com.mzaimilzam.core.domain.model.ResultAlbumList
 
 /**
  * Created by Muhammad Zaim Milzam on 04/11/2021.
@@ -29,6 +31,18 @@ object DataMapperAlbums {
                 id = it.id,
                 title = it.title,
                 userId = it.userId
+            )
+        }
+
+    fun mapResultEntitiestoDomain(input: List<ResultAlbumListEntity>): List<ResultAlbumList> =
+        input.map {
+            ResultAlbumList(
+                id = it.id,
+                title = it.title,
+                albumId = it.albumId,
+                url = it.url,
+                thumbnailUrl = it.thumbnailUrl,
+                albumName = it.albumName,
             )
         }
 

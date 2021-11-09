@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.mzaimilzam.core.domain.model.ResultListAllPost
-import com.mzaimilzam.kumparantestapplication.CustomText
 
 /**
  * Created by Muhammad Zaim Milzam on 05/11/2021.
@@ -29,9 +28,8 @@ fun ItemListAllPostScreen(
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Text(
-//                text = allPost.title.toString()
-//                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
-                text = CustomText.toCapitalize(allPost.title.toString()),
+                text = allPost.title.toString()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                 style = MaterialTheme.typography.h6,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -39,7 +37,8 @@ fun ItemListAllPostScreen(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = CustomText.toCapitalize(allPost.body.toString()),
+                text = allPost.body.toString()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                 style = MaterialTheme.typography.body2,
                 modifier = Modifier.fillMaxWidth()
             )

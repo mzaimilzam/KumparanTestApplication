@@ -17,7 +17,8 @@ import com.mzaimilzam.core.utils.Constant.DATABASE_VERSION
         ResultListAllPostEntity::class,
         CommentEntity::class,
         AlbumsEntity::class,
-        PhotoEntity::class
+        PhotoEntity::class,
+        ResultAlbumListEntity::class
     ],
     version = DATABASE_VERSION,
     exportSchema = false

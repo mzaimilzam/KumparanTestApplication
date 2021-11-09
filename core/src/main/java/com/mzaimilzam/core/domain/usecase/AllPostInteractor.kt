@@ -28,5 +28,5 @@ class AllPostInteractor @Inject constructor(private val repository: Repository) 
         repository.getPhotobyAlbumId(albumId)
 
     override suspend fun deletePhoto() = repository.deletePhoto()
-    override fun getFilterFoto(albumId: Int): Flow<List<Photo>> = repository.getFilterFoto(albumId)
+    override fun getResultAlbumList(): Flow<List<ResultAlbumList>> = repository.getResultAlbumList()
 }

@@ -3,6 +3,7 @@ package com.mzaimilzam.kumparantestapplication.presenter.detail_user
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -18,7 +19,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
-import com.mzaimilzam.kumparantestapplication.Screen
 import com.mzaimilzam.kumparantestapplication.presenter.components.ArrowBack
 import com.mzaimilzam.kumparantestapplication.presenter.detail_user.component.ItemDetailUser
 import com.mzaimilzam.kumparantestapplication.presenter.detail_user.component.ItemListPhoto
@@ -38,7 +38,7 @@ fun DetailUserScreen(
 ) {
     val state = viewModel.state.value
     val stateAlbumsState = viewModel.stateAlbums.value
-    val statePhoto = viewModel.statePhoto.value
+    val stateResult = viewModel.stateResult.value
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -63,15 +63,17 @@ fun DetailUserScreen(
                     .padding(start = 16.dp, top = 16.dp, end = 16.dp)
                     .clip(RoundedCornerShape(8.dp))
             ) {
-                val grouped = statePhoto.result.groupBy { it.albumId }
+                val grouped = stateResult.result.groupBy { it.albumName }
 
-                grouped.forEach { initial, data ->
+                grouped.forEach { (initial, data) ->
                     stickyHeader {
                         Text(
-                            text = initial.toString(),
+                            text = initial.toString()
+                                .replaceFirstChar { if (it.isLowerCase()) it.titlecase() else it.toString() },
                             style = MaterialTheme.typography.h6,
                             modifier = Modifier
                                 .fillMaxWidth()
+                                .background(MaterialTheme.colors.primary)
                                 .padding(bottom = 4.dp)
                         )
 
@@ -80,36 +82,27 @@ fun DetailUserScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         ItemListPhoto(
                             navController = navController,
-                            photo = result,
-                            onItemClick = {
-                                navController.navigate(
-                                    route = Screen.DetailPhotoScreen.passtoDetailPhotoScreen(
-                                        url = result.url.toString(),
-                                        title = result.title.toString()
-                                    )
-                                )
-
-                            })
+                            result = result,
+                        )
                         Spacer(modifier = Modifier.height(8.dp))
                     }
 
                 }
             }
-            if (statePhoto.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(top = 100.dp),
 
+            if (stateResult.isLoading || stateAlbumsState.isLoading) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(top = 100.dp),
                     )
 
-            }
-
-            if (stateAlbumsState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(top = 32.dp),
-
-                    )
+                }
             }
 
         }

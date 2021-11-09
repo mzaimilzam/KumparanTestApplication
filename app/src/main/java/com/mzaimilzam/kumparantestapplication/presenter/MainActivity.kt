@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import coil.annotation.ExperimentalCoilApi
+import com.mzaimilzam.core.domain.model.ResultAlbumList
 import com.mzaimilzam.core.domain.model.ResultListAllPost
 import com.mzaimilzam.kumparantestapplication.*
 import com.mzaimilzam.kumparantestapplication.presenter.all_post.AllPostListScreen
@@ -102,28 +103,18 @@ class MainActivity : ComponentActivity() {
 
                             DetailUserScreen(navController = navController)
                         }
-                        composable(
-                            route = Screen.DetailPhotoScreen.route,
-                            arguments = listOf(
-                                navArgument(DETAIL_PHOTO_SCREEN_URL) {
-                                    type = NavType.StringType
-                                },
-                                navArgument(DETAIL_PHOTO_SCREEN_TITLE) {
-                                    type = NavType.StringType
-                                }
-                            )
-                        ) {
-                            val url = remember {
-                                it.arguments?.getString(DETAIL_PHOTO_SCREEN_URL)
+                        composable(route = Screen.DetailPhotoScreen.route) {
+                            val result =
+                                navController.previousBackStackEntry?.arguments?.getParcelable<ResultAlbumList>(
+                                    DETAIL_PHOTO_SCREEN_PHOTO
+                                )
+                            result?.let {
+                                DetailPhotoScreen(
+                                    navController = navController,
+                                    result = result
+                                )
+
                             }
-                            val title = remember {
-                                it.arguments?.getString(DETAIL_PHOTO_SCREEN_TITLE)
-                            }
-                            DetailPhotoScreen(
-                                navController = navController,
-                                url = url.toString(),
-                                title = title.toString()
-                            )
                         }
                     }
 
